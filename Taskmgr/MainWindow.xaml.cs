@@ -64,24 +64,40 @@ namespace Taskmgr
             Process[] processes = Process.GetProcesses();
             foreach (var proces in processes)
             {
-                if (Task.SelectedItem.ToString() == proces.ProcessName.ToString())
-                {
-
+                
                     try
                     {
-                        string info = string.Empty;
-                        info += $"ID :{proces.Id.ToString()}";
-                        info += $"\nStart time : {proces.StartTime.ToString()}";
-                        MessageBox.Show(info);
-                        break;
+                        if (Task.SelectedItem.ToString() == proces.ProcessName.ToString())
+                        {
+                            string info = string.Empty;
+                            info += $"ID :{proces.Id.ToString()}";
+                            info += $"\nStart time : {proces.StartTime.ToString()}";
+                            MessageBox.Show(info);
+                            break;
+                        }
                     }
                     catch (Exception)
                     {
-
-                        MessageBox.Show("Access denied");
+                        if (Task.SelectedItem==null)
+                        {
+                            MessageBox.Show("Not select task");
+                        return;
+                        }
+                        else
+                        {
+                            MessageBox.Show("Access denied");
+                        return;
+                        }
+                        break;
+                        
                     }
+                
+               
+               
+
+                   
                     
-                }
+                
                     
             }           
            for (int i = 0; i < processes.Count(); i++)
@@ -95,20 +111,31 @@ namespace Taskmgr
             Process[] processes = Process.GetProcesses();
             foreach (var proces in processes)
             {
-                if (Task.SelectedItem.ToString() == proces.ProcessName.ToString())
+                try
                 {
-                    try
+                    if (Task.SelectedItem.ToString() == proces.ProcessName.ToString())
                     {
-                        proces.Kill();
-                        break;
-                    }
-                    catch (Exception)
-                    {
+                        try
+                        {
+                            proces.Kill();
+                            break;
+                        }
+                        catch (Exception)
+                        {
 
-                        MessageBox.Show("Not select task");
+                            MessageBox.Show("Not select task");
+                            return;
+                        }
+
                     }
-                   
                 }
+                catch (Exception)
+                {
+
+                    MessageBox.Show("Not select task");
+                    return;
+                }
+              
 
             }
             for (int i = 0; i < processes.Count(); i++)
